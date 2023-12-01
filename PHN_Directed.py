@@ -9,7 +9,7 @@ import dionysus as dio
 
 
 
-def pairs_dictionary(D):
+def pairs_dictionary(D, shortest_dict):
     dictionary = {}
     nodes = sorted(list(D.nodes))
 
@@ -19,24 +19,24 @@ def pairs_dictionary(D):
             length = np.inf
             #print(u,v)
             try:
-                path = nx.shortest_path(D,u,v, weight='weight')
+                path = shortest_dict[u][v]
                 #length = len(path)
                 length = nx.path_weight(D, path, weight='weight')
                 #print(path)
-            except nx.NetworkXNoPath: pass
+            except KeyError: pass
             try:
-                path2 = nx.shortest_path(D,v,u, weight='weight')
+                path2 = shortest_dict[v][u]
                 #if len(path2) < length:
                 if nx.path_weight(D, path2, weight='weight') < length:
                     path = path2
                 #print(path2)
-            except nx.NetworkXNoPath: pass
+            except KeyError: pass
             dictionary[(u,v)] = path
     return dictionary
 
 
 
-def find_f_path(D, sigma, dictionary):
+def find_f_path(D, sigma, shortest_dict, cumulative_dict):
     """
     This function finds the shortest path, in a digraph D, that contains all vertices in subset sigma,
     so that the filtration value of sigma is len(path)-1.
@@ -44,18 +44,20 @@ def find_f_path(D, sigma, dictionary):
     Args:
         D (networkx.DiGraph): directed graph
         sigma (list or tuple): subset of Vert(D)
-        dictionary (dictionary): dictionary where shortest paths are stored successively; 
-            should already contain at least all shortest paths of all pairs in D.
+        shortest_dict (dictionary): dictionary generated from NetworkX;
+            this is an input so that it is computed just once overall
+        cumulative_dict (dictionary): dictionary where shortest paths are stored successively; 
+            should already contain at least all shortest paths for all pairs in D
 
     Returns:
         [None]: None if there is no path that contains all the vertices
         or
         [list]: shortest path in D containing sigma
     """
-
+    
     sigma = sorted(sigma)
     try:
-        return dictionary[tuple(sigma)]
+        return cumulative_dict[tuple(sigma)]
     except KeyError:
         pass
     length = np.inf
@@ -67,7 +69,7 @@ def find_f_path(D, sigma, dictionary):
         #print('subset is', subset)
 
         ## find min path for subset
-        path1 = find_f_path(D, subset, dictionary)
+        path1 = find_f_path(D, subset, shortest_dict, cumulative_dict)
 
         ## if there is no path
         if path1 == None:
@@ -82,21 +84,18 @@ def find_f_path(D, sigma, dictionary):
                 option = 0
                 length2 = np.inf
                 try:
-                    path2 = nx.shortest_path(D, sigma[i],path1[0], weight='weight')
+                    path2 = shortest_dict[sigma[i]][path1[0]]
                     option = 1
-                    #length2 = len(path2)
                     length2 = nx.path_weight(D, path2, weight='weight')
                     #print('option 1', path2)
-                except nx.NetworkXNoPath: pass
+                except KeyError: pass
                 try:
-                    path3 = nx.shortest_path(D, path1[-1],sigma[i], weight='weight')
+                    path3 = shortest_dict[path1[-1]][sigma[i]]
                     length3 = nx.path_weight(D, path3, weight='weight')
-                    #if len(path3) < length2:
                     if length3 < length2:
                         option = 2
-                        #path = path2
                     #print('option 2', path3)
-                except nx.NetworkXNoPath: pass
+                except KeyError: pass
 
                 ## concatenate shortest option
                 if option == 0:
@@ -109,25 +108,23 @@ def find_f_path(D, sigma, dictionary):
             #print('path is', path1)
 
             ## overwrite path if this is better than the last one
-            #if len(path1) < length:
-            if nx.path_weight(D, path1, weight='weight') < length:
-                #print('hey')
+            length1 = nx.path_weight(D, path1, weight='weight')
+            if length1 < length:
+                #print('hey, new best')
                 path = path1
-                #length = len(path)
-                length = nx.path_weight(D, path, weight='weight')
-                if length == len(sigma): break
+                length = length1
     #print('completed:', path)
     ## save data in dictionary
-    dictionary[tuple(sigma)] = path
+    cumulative_dict[tuple(sigma)] = path
     return path
 
 
-def all_fvalues(D, dictionary, max_size=3):
+def all_fvalues(D, shortest_dict, max_size=3):
     """This function computes all f(sigma) values for all possible vertex subsets, sigma, with size at most max_size.
 
     Args:
         D (networkx.DiGraph): directed graph
-        dictionary (dictionary): dictionary where shortest paths are stored successively
+        shortest_dict (dictionary): dictionary where shortest paths are stored successively
         max_dim (int): maximum size for subsets; default is 3
 
     Returns:
@@ -135,13 +132,15 @@ def all_fvalues(D, dictionary, max_size=3):
         all_fvals (list): list of all corresponding filtration values (float)
     """
 
+    cumulative_dict = pairs_dictionary(D, shortest_dict)
+
     nodes = sorted(list(D.nodes))
     from itertools import chain, combinations
     all_subsets = list(chain.from_iterable(combinations(nodes, r) for r in range(1,max_size+1)))
 
     all_fvals = [0 for _ in nodes]
     for sigma in all_subsets[len(nodes):]:
-        path = find_f_path(D, sigma, dictionary)
+        path = find_f_path(D, sigma, shortest_dict, cumulative_dict)
         if path == None:
             all_fvals.append(np.inf)
         else:
@@ -163,9 +162,10 @@ def newfiltration_persistence(D, max_dim=1):
         dgms (list): list of persistence diagrams
     '''
 
-    shortest_paths_asym = pairs_dictionary(D)
+    shortest_dict = nx.shortest_path(D)
+    #shortest_paths_asym = pairs_dictionary(D, shortest_dict)
     ## to compute n-dimensional homology we need, (n+1)-dimensional simplices, so subsets of size n+2
-    all_subsets, all_fvals = all_fvalues(D, shortest_paths_asym, max_size=max_dim+2)
+    all_subsets, all_fvals = all_fvalues(D, shortest_dict, max_size=max_dim+2)
 
     f = dio.Filtration()
     for simp, time in zip(all_subsets,all_fvals):
