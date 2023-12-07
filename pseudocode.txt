@@ -1,0 +1,38 @@
+# Project Pseudocode 
+## CMSE890-602
+## David Munoz
+
+function convert_data_graph(data)
+    graph = collect (vertices, directed edges, weights) from data
+    return graph
+
+function filtration(graph)
+    # Filtration given as a sequence of simplicial complexes
+    # This is roughly how it works
+    filt_values = empty list or dictionary
+
+    for each subset of vertices(graph)
+        min_path = path with minimum weight that contains subset
+        filt_values[subset] = weight(min_path)
+
+    filtration = build simplicial filtration using all values in filt_values
+
+    return filtration
+
+function persistent_diagram(filtration)
+    # Already existing software for persistent homology
+    return diagram
+
+
+DynamicalSystem_data = read( Data generated with existing software )
+BrainActivity_data = download( www.somebraindata.com ) # I don't have this data yet but it will potentially be from C. elegans data
+
+DS_graph = convert_data_graph( DynamicalSystem_data )
+DS_diag = persistent_diagram( filtration( DS_graph ) )
+save_image('DS_diag', DS_diag)
+
+BA_graph = convert_data_graph( BrainActivity_data )
+BA_diag = persistent_diagram( filtration( BA_graph ) )
+save_image('BA_diag', BA_diag)
+
+# The analysis of these diagrams is via observation, not with any additional code
