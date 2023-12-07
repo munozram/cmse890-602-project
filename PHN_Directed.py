@@ -9,7 +9,18 @@ import dionysus as dio
 
 
 
-def pairs_dictionary(D, shortest_dict):
+def pairs_dictionary(D : NetworkX.DiGraph, shortest_dict : dict) -> dict:
+    """
+    This function builds a dictionary with the shortest path between any pair of vertices.
+
+    Args:
+        D (networkx.DiGraph): directed graph
+        shortest_dict (dictionary): dictionary generated from NetworkX;
+            this is an input so that it is computed just once overall
+
+    Returns:
+        [dictionary]: Dictionary containing shortest paths. Keys are tuples, values are lists.
+    """
     dictionary = {}
     nodes = sorted(list(D.nodes))
 
@@ -36,7 +47,7 @@ def pairs_dictionary(D, shortest_dict):
 
 
 
-def find_f_path(D, sigma, shortest_dict, cumulative_dict):
+def find_f_path(D : NetworkX.DiGraph, sigma : list | tuple, shortest_dict : dict, cumulative_dict : dict) -> list | None:
     """
     This function finds the shortest path, in a digraph D, that contains all vertices in subset sigma,
     so that the filtration value of sigma is len(path)-1.
@@ -119,7 +130,7 @@ def find_f_path(D, sigma, shortest_dict, cumulative_dict):
     return path
 
 
-def all_fvalues(D, shortest_dict, max_size=3):
+def all_fvalues(D : NetworkX.DiGraph, shortest_dict : dict, max_size : int=3) -> tuple[list, list]:
     """This function computes all f(sigma) values for all possible vertex subsets, sigma, with size at most max_size.
 
     Args:
@@ -150,7 +161,7 @@ def all_fvalues(D, shortest_dict, max_size=3):
     return all_subsets, all_fvals
 
 
-def newfiltration_persistence(D, max_dim=1):
+def newfiltration_persistence(D : NetworkX.DiGraph, max_dim : int=1) -> dionysus.Diagram:
     '''
     This function computes persistence via new filtration from a digraph D using Dionysus.
 
@@ -176,10 +187,29 @@ def newfiltration_persistence(D, max_dim=1):
     return dgms
 
 
-def plot_dgms(dgms, title=None, filename=None, report_repeats=True, max_dim=1, ax=None, max_val=1, get_dgms=False):
+def plot_dgms(dgms : dionysus.Diagram, 
+              title : str | None=None, 
+              filename : str | None=None, 
+              report_repeats : bool=True, 
+              max_dim : int | None=1, 
+              ax : plt.Axes | None=None, 
+              max_val : float=1., 
+              get_dgms : bool=False) -> plt.Axes | tuple[plt.Axes, np.array]:
     '''
-    Plots persistence diagrams as
-    obtained from dionysus.
+    This function plots persistence diagrams as obtained from Dionysus.
+
+    Args:
+        dgms (dionysus.Diagram) : Diagram for plotting
+        title (str | None) : Title for the figure; default is None
+        filename (str | None) : Filename for saving figure; default does not save
+        report_repeats (bool) : Print repeated points in diagram; default is True
+        max_dim (int | None) : Maximum homology dimension to show; default is 1
+        ax (plt.Axes | None) : Plotting axis; default is current axis
+        max_val (float) : Maximum limit in both axes; can only be higher than maximum finite death or birth in diagram
+        get_dgms (bool) : Return diagram points as a Numpy array; default is False
+
+    Returns:
+        ax (plt.Axes): Axis
     '''
 
     colors = ['red', 'blue', 'green', 'orange', 'brown']
@@ -251,24 +281,3 @@ def plot_dgms(dgms, title=None, filename=None, report_repeats=True, max_dim=1, a
         return ax, np.array([births,deaths,dims])
 
     return ax
-
-
-def plot_graph_dgms(D, dgms, title=None, report_repeats=True, max_dim=1, max_val=1, spring_iterations=0, with_labels=False, node_size=100, pos=None):
-    #fig = plt.figure(figsize=(10,5))
-    fig, (ax1, ax2) = plt.subplots(1,2, figsize=(6,3))
-    if title!=None: plt.suptitle( title )
-
-    #plt.subplot(1,2,1)
-    #pos = nx.spring_layout(D,seed=1)
-    if spring_iterations>0:
-        pos = nx.spring_layout(D, seed=1, k=1, iterations = spring_iterations*len(D))
-    elif pos == None:
-        n_vert = len(D)
-        pos = {i:[np.cos(2*np.pi*i/n_vert),np.sin(2*np.pi*i/n_vert)] for i in D.nodes}
-    nx.draw(D, pos=pos, labels={ list(D)[i] : i+1 for i in range(D.number_of_nodes()) }, 
-            node_size=node_size, with_labels=with_labels, ax=ax1)
-
-    #plt.subplot(1,2,2)
-    plot_dgms(dgms, report_repeats=report_repeats, max_dim=max_dim, max_val=max_val, ax=ax2)
-
-    return fig
