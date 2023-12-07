@@ -1,0 +1,7 @@
+site_name: Project Documentation
+theme:
+  name: "cinder"
+plugins:
+  - mkdocstrings
+nav:
+  - Home: index.md
