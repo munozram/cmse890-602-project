@@ -1,6 +1,9 @@
 name: deploy-doc
 run-name: ${{ github.actor }} is setting up documentation
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   testing-functions:
     runs-on: ubuntu-latest
