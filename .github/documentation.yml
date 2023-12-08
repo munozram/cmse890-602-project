@@ -1,4 +1,4 @@
-name: deploy-documentation
+name: deploy-doc
 run-name: ${{ github.actor }} is setting up documentation
 on: [push]
 jobs:
