@@ -5,4 +5,7 @@ plugins:
   - mkdocstrings
 nav:
   - Home: index.md
+  - Tutorial: tutorial.md
+  - How-to Guide: howtoguide.md
+  - Explanation: explanation.md
   - Reference: reference.md

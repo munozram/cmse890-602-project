@@ -186,11 +186,11 @@ def newfiltration_persistence(D : NetworkX.DiGraph, max_dim : int=1) -> dionysus
 
 
 def plot_dgms(dgms : dionysus.Diagram, 
-              title : str | None=None, 
-              filename : str | None=None, 
+              title : typing.Optional[str]=None, 
+              filename : typing.Optional[str]=None, 
               report_repeats : bool=True, 
-              max_dim : int | None=1, 
-              ax : plt.Axes | None=None, 
+              max_dim : typing.Optional[int]=1, 
+              ax : typing.Optional[plt.Axes]=None, 
               max_val : float=1., 
               get_dgms : bool=False
               ) -> plt.Axes | tuple[plt.Axes, np.array]:
