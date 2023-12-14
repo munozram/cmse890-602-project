@@ -47,7 +47,7 @@ def pairs_dictionary(D : NetworkX.DiGraph, shortest_dict : dict) -> dict:
 
 
 
-def find_f_path(D : NetworkX.DiGraph, sigma : list | tuple, shortest_dict : dict, cumulative_dict : dict) -> list | None:
+def find_f_path(D : NetworkX.DiGraph, sigma : list | tuple, shortest_dict : dict, cumulative_dict : dict) -> list:
     """
     This function finds the shortest path, in a digraph D, that contains all vertices in subset sigma,
     so that the filtration value of sigma is len(path)-1.
