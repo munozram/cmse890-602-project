@@ -430,7 +430,7 @@
           </td>
         </tr>
         <tr>
-          <td><code>max_dim</code></td>
+          <td><code>max_size</code></td>
           <td>
                 <code>int</code>
           </td>
@@ -440,7 +440,7 @@
             </div>
           </td>
           <td>
-              <em>required</em>
+                <code>3</code>
           </td>
         </tr>
     </tbody>
@@ -516,7 +516,7 @@
 <span class="sd">    Args:</span>
 <span class="sd">        D (networkx.DiGraph): directed graph</span>
 <span class="sd">        shortest_dict (dictionary): dictionary where shortest paths are stored successively</span>
-<span class="sd">        max_dim (int): maximum size for subsets; default is 3</span>
+<span class="sd">        max_size (int): maximum size for subsets; default is 3</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        all_subsets (list): list of all subsets (list) up to given size</span>
@@ -1413,14 +1413,16 @@ this is an input so that it is computed just once overall</p>
 <span class="normal">280</span>
 <span class="normal">281</span>
 <span class="normal">282</span>
-<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_dgms</span><span class="p">(</span><span class="n">dgms</span> <span class="p">:</span> <span class="n">dionysus</span><span class="o">.</span><span class="n">Diagram</span><span class="p">,</span> 
+<span class="normal">283</span>
+<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_dgms</span><span class="p">(</span><span class="n">dgms</span> <span class="p">:</span> <span class="n">dionysus</span><span class="o">.</span><span class="n">Diagram</span><span class="p">,</span> 
               <span class="n">title</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
               <span class="n">filename</span> <span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
               <span class="n">report_repeats</span> <span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
               <span class="n">max_dim</span> <span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
               <span class="n">ax</span> <span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="kc">None</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
               <span class="n">max_val</span> <span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> 
-              <span class="n">get_dgms</span> <span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
+              <span class="n">get_dgms</span> <span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span>
+              <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function plots persistence diagrams as obtained from Dionysus.</span>
 
