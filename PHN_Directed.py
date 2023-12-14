@@ -194,7 +194,8 @@ def plot_dgms(dgms : dionysus.Diagram,
               max_dim : int | None=1, 
               ax : plt.Axes | None=None, 
               max_val : float=1., 
-              get_dgms : bool=False) -> plt.Axes | tuple[plt.Axes, np.array]:
+              get_dgms : bool=False
+              ) -> plt.Axes | tuple[plt.Axes, np.array]:
     '''
     This function plots persistence diagrams as obtained from Dionysus.
 
