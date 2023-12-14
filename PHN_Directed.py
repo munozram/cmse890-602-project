@@ -61,9 +61,7 @@ def find_f_path(D : NetworkX.DiGraph, sigma : list | tuple, shortest_dict : dict
             should already contain at least all shortest paths for all pairs in D
 
     Returns:
-        [None]: None if there is no path that contains all the vertices
-        or
-        [list]: shortest path in D containing sigma
+        path : shortest path in D containing sigma; None if there is no path that contains all the vertices
     """
     
     sigma = sorted(sigma)
