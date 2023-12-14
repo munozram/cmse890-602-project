@@ -136,7 +136,7 @@ def all_fvalues(D : NetworkX.DiGraph, shortest_dict : dict, max_size : int=3) ->
     Args:
         D (networkx.DiGraph): directed graph
         shortest_dict (dictionary): dictionary where shortest paths are stored successively
-        max_dim (int): maximum size for subsets; default is 3
+        max_size (int): maximum size for subsets; default is 3
 
     Returns:
         all_subsets (list): list of all subsets (list) up to given size
