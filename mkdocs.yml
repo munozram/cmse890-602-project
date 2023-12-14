@@ -1,6 +1,6 @@
 site_name: Project Documentation
 theme:
-  name: "cinder"
+  name: "material"
 plugins:
   - mkdocstrings
 nav:
