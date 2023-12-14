@@ -199,11 +199,11 @@ def plot_dgms(dgms : dionysus.Diagram,
 
     Args:
         dgms (dionysus.Diagram) : Diagram for plotting
-        title (str | None) : Title for the figure; default is None
-        filename (str | None) : Filename for saving figure; default does not save
+        title : Title for the figure; default is None
+        filename : Filename for saving figure; default does not save
         report_repeats (bool) : Print repeated points in diagram; default is True
-        max_dim (int | None) : Maximum homology dimension to show; default is 1
-        ax (plt.Axes | None) : Plotting axis; default is current axis
+        max_dim : Maximum homology dimension to show; default is 1
+        ax : Plotting axis; default is current axis
         max_val (float) : Maximum limit in both axes; can only be higher than maximum finite death or birth in diagram
         get_dgms (bool) : Return diagram points as a Numpy array; default is False
 
