@@ -1258,7 +1258,6 @@ this is an input so that it is computed just once overall</p>
         <tr>
           <td><code>title</code></td>
           <td>
-                <code>str | None) </code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1272,7 +1271,6 @@ this is an input so that it is computed just once overall</p>
         <tr>
           <td><code>filename</code></td>
           <td>
-                <code>str | None) </code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1300,7 +1298,6 @@ this is an input so that it is computed just once overall</p>
         <tr>
           <td><code>max_dim</code></td>
           <td>
-                <code>int | None) </code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1314,7 +1311,6 @@ this is an input so that it is computed just once overall</p>
         <tr>
           <td><code>ax</code></td>
           <td>
-                <code>plt.Axes | None) </code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1490,11 +1486,11 @@ this is an input so that it is computed just once overall</p>
 
 <span class="sd">    Args:</span>
 <span class="sd">        dgms (dionysus.Diagram) : Diagram for plotting</span>
-<span class="sd">        title (str | None) : Title for the figure; default is None</span>
-<span class="sd">        filename (str | None) : Filename for saving figure; default does not save</span>
+<span class="sd">        title : Title for the figure; default is None</span>
+<span class="sd">        filename : Filename for saving figure; default does not save</span>
 <span class="sd">        report_repeats (bool) : Print repeated points in diagram; default is True</span>
-<span class="sd">        max_dim (int | None) : Maximum homology dimension to show; default is 1</span>
-<span class="sd">        ax (plt.Axes | None) : Plotting axis; default is current axis</span>
+<span class="sd">        max_dim : Maximum homology dimension to show; default is 1</span>
+<span class="sd">        ax : Plotting axis; default is current axis</span>
 <span class="sd">        max_val (float) : Maximum limit in both axes; can only be higher than maximum finite death or birth in diagram</span>
 <span class="sd">        get_dgms (bool) : Return diagram points as a Numpy array; default is False</span>
 
