@@ -397,10 +397,7 @@
                                 [0.5, 0. , 0. , 3. , 0. ]])
 &gt;&gt;&gt; graph = nx.DiGraph(adjacency_matrix)
 </code></pre>
-<p align="center">
-<img src="https://github.com/munozram/cmse890-602-project/blob/main/docs/example_graph.png" />
-</p>
-
+<p><img alt="Example graph" src="../example_graph.png" /></p>
 <h3 id="compute-persistent-homology">Compute persistent homology</h3>
 <p>Now we just use our function to compute persistent homology on this graph as shown below. We may choose a higher homology dimension. The output of this function is a list of persistence diagrams (one per dimension from 0 to <code>max_dim</code> plus possibly a last one showing evidence of higher dimensional points) as <code>dionysus.Diagram</code> objects.</p>
 <pre><code>&gt;&gt;&gt; dgms = newfiltration_persistence(graph, max_dim = 3)
@@ -415,9 +412,7 @@
 <p>We may also use the plotting function to see the persistence diagram.</p>
 <pre><code>&gt;&gt;&gt; plot_dgms(dgms, max_dim=3)
 </code></pre>
-<p align="center">
-<img src="https://github.com/munozram/cmse890-602-project/blob/main/docs/example_diagram.png" />
-</p>
+<p><img alt="Example diagram" src="../example_diagram.png" /></p>
 
 
 
