@@ -176,7 +176,7 @@ def all_fvalues(D: nx.DiGraph,
 
 def newfiltration_persistence(
         D: nx.DiGraph,
-        max_dim: int = 1) -> dio.Diagram:
+        max_dim: int = 1):
     '''
     This function computes persistence via new filtration from a digraph D using Dionysus.
 
@@ -193,7 +193,6 @@ def newfiltration_persistence(
     all_subsets, all_fvals = all_fvalues(D, max_size=max_dim + 2)
 
     import dionysus as dio
-    
     f = dio.Filtration()
     for simp, time in zip(all_subsets, all_fvals):
         f.append(dio.Simplex(list(simp), time))
@@ -203,7 +202,7 @@ def newfiltration_persistence(
     return dgms
 
 
-def plot_dgms(dgms: dio.Diagram,
+def plot_dgms(dgms,
               title: Optional[str] = None,
               filename: Optional[str] = None,
               report_repeats: bool = True,
