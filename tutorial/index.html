@@ -239,6 +239,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#plot-persistence-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plot persistence diagram
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -351,6 +360,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#plot-persistence-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plot persistence diagram
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -371,20 +389,35 @@
 <p>The code in this project is used to analyze the general structure of a directed graph. Here we show a simple example that uses this tool.</p>
 <h3 id="a-weighted-directed-graph">A weighted directed graph</h3>
 <p>First, we need a graph to analyze. For this example we will use the following graph given by its adjacency matrix. Note that the weights of edges are included in this matrix.</p>
-<pre><code>import numpy as np
-adjacency_matrix = np.array([[0. , 1. , 0. , 1.6, 0. ],
-                            [0. , 0. , 0. , 0. , 0. ],
-                            [0. , 2. , 0. , 0. , 0. ],
-                            [0. , 0. , 0.8, 0. , 0. ],
-                            [0.5, 0. , 0. , 3. , 0. ]])
-graph = nx.DiGraph(adjacency_matrix)
+<pre><code>&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; adjacency_matrix = np.array([[0. , 1. , 0. , 1.6, 0. ],
+                                [0. , 0. , 0. , 0. , 0. ],
+                                [0. , 2. , 0. , 0. , 0. ],
+                                [0. , 0. , 0.8, 0. , 0. ],
+                                [0.5, 0. , 0. , 3. , 0. ]])
+&gt;&gt;&gt; graph = nx.DiGraph(adjacency_matrix)
 </code></pre>
-<p><img alt="Example graph" src="../example_graph.png" /></p>
+<p align="center">
+![Example graph](example_graph.png)
+</p>
+
 <h3 id="compute-persistent-homology">Compute persistent homology</h3>
-<p>Use the function as shown below:</p>
-<pre><code>&gt;&gt;&gt; newfiltration_persistence( graph )
-&gt;&gt;&gt; ...
+<p>Now we just use our function to compute persistent homology on this graph as shown below. We may choose a higher homology dimension. The output of this function is a list of persistence diagrams (one per dimension from 0 to <code>max_dim</code> plus possibly a last one showing evidence of higher dimensional points) as <code>dionysus.Diagram</code> objects.</p>
+<pre><code>&gt;&gt;&gt; dgms = newfiltration_persistence(graph, max_dim = 3)
+&gt;&gt;&gt; dgms
+[Diagram with 5 points,
+ Diagram with 1 points,
+ Diagram with 2 points,
+ Diagram with 3 points,
+ Diagram with 1 points]
 </code></pre>
+<h3 id="plot-persistence-diagram">Plot persistence diagram</h3>
+<p>We may also use the plotting function to see the persistence diagram.</p>
+<pre><code>&gt;&gt;&gt; plot_dgms(dgms, max_dim=3)
+</code></pre>
+<p align="center">
+![Example diagram](example_diagram.png)
+</p>
 
 
 
