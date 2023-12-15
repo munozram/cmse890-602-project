@@ -1,3 +1,6 @@
+# Test for the function `newfiltration_persistence`
+# Should only be run locally where the python package Dionysus is installed
+
 import pytest
 from PHN_Directed import *
 
