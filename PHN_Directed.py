@@ -4,7 +4,7 @@ import networkx as nx
 import copy
 from typing import Optional
 
-#import dionysus as dio
+# import dionysus as dio
 
 # from PHN_Dowker import *
 
@@ -193,7 +193,7 @@ def newfiltration_persistence(
     all_subsets, all_fvals = all_fvalues(D, max_size=max_dim + 2)
 
     import dionysus as dio
-    
+
     f = dio.Filtration()
     for simp, time in zip(all_subsets, all_fvals):
         f.append(dio.Simplex(list(simp), time))
