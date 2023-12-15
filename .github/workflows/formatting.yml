@@ -22,6 +22,8 @@ jobs:
           autopep8 --in-place --aggressive --aggressive PHN_Directed.py
       - name: Commit changes
         run: |
+          git config --global user.name 'David M'
+          git config --global user.email 'munozram@users.noreply.github.com'
           git add PHN_Directed.py
           git commit -m 'Automated commit after PEP8 formatting'
           git push
