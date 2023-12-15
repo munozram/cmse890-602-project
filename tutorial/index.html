@@ -370,7 +370,7 @@
 <p><em>Tutorials are lessons that take the reader by the hand through a series of steps to complete a project of some kind. Tutorials are learning-oriented.</em></p>
 <p>The code in this project is used to analyze the general structure of a directed graph. Here we show a simple example that uses this tool.</p>
 <h3 id="a-weighted-directed-graph">A weighted directed graph</h3>
-<p>First, we need a graph to analyze. For this example we will use the following graph.</p>
+<p>First, we need a graph to analyze. For this example we will use the following graph given by its adjacency matrix. Note that the weights of edges are included in this matrix.</p>
 <pre><code>import numpy as np
 adjacency_matrix = np.array([[0. , 1. , 0. , 1.6, 0. ],
                             [0. , 0. , 0. , 0. , 0. ],
@@ -379,6 +379,7 @@ adjacency_matrix = np.array([[0. , 1. , 0. , 1.6, 0. ],
                             [0.5, 0. , 0. , 3. , 0. ]])
 graph = nx.DiGraph(adjacency_matrix)
 </code></pre>
+<p><img alt="Example graph" src="../example_graph.png" /></p>
 <h3 id="compute-persistent-homology">Compute persistent homology</h3>
 <p>Use the function as shown below:</p>
 <pre><code>&gt;&gt;&gt; newfiltration_persistence( graph )
