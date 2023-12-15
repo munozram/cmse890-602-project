@@ -568,14 +568,7 @@
 
           <details class="quote">
             <summary>Source code in <code>PHN_Directed.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">138</span>
 <span class="normal">139</span>
 <span class="normal">140</span>
 <span class="normal">141</span>
@@ -596,7 +589,22 @@
 <span class="normal">156</span>
 <span class="normal">157</span>
 <span class="normal">158</span>
-<span class="normal">159</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">all_fvalues</span><span class="p">(</span><span class="n">D</span> <span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">shortest_dict</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">max_size</span> <span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">all_fvalues</span><span class="p">(</span><span class="n">D</span><span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">shortest_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+                <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This function computes all f(sigma) values for all possible vertex subsets, sigma, with size at most max_size.</span>
 
 <span class="sd">    Args:</span>
@@ -613,17 +621,23 @@
 
     <span class="n">nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">nodes</span><span class="p">))</span>
     <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">combinations</span>
-    <span class="n">all_subsets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">max_size</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+    <span class="n">all_subsets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+            <span class="n">combinations</span><span class="p">(</span>
+                <span class="n">nodes</span><span class="p">,</span>
+                <span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="n">max_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span>
 
     <span class="n">all_fvals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="n">all_subsets</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">):]:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">find_f_path</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">shortest_dict</span><span class="p">,</span> <span class="n">cumulative_dict</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">all_fvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1">#print(sigma, path)</span>
-            <span class="c1">#all_fvals.append(len(path)-1)</span>
-            <span class="n">all_fvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_weight</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span> <span class="p">)</span>
+            <span class="c1"># print(sigma, path)</span>
+            <span class="c1"># all_fvals.append(len(path)-1)</span>
+            <span class="n">all_fvals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">path_weight</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">all_subsets</span><span class="p">,</span> <span class="n">all_fvals</span>
 </code></pre></div></td></tr></table></div>
           </details>
@@ -711,7 +725,7 @@ this is an input so that it is computed just once overall</p>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>dictionary where shortest paths are stored successively; 
+              <p>dictionary where shortest paths are stored successively;
 should already contain at least all shortest paths for all pairs in D</p>
             </div>
           </td>
@@ -826,7 +840,18 @@ should already contain at least all shortest paths for all pairs in D</p>
 <span class="normal">125</span>
 <span class="normal">126</span>
 <span class="normal">127</span>
-<span class="normal">128</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">find_f_path</span><span class="p">(</span><span class="n">D</span> <span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">sigma</span> <span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">shortest_dict</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">cumulative_dict</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">find_f_path</span><span class="p">(</span>
+        <span class="n">D</span><span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span>
+        <span class="n">sigma</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">,</span>
+        <span class="n">shortest_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">cumulative_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function finds the shortest path, in a digraph D, that contains all vertices in subset sigma,</span>
 <span class="sd">    so that the filtration value of sigma is len(path)-1.</span>
@@ -836,7 +861,7 @@ should already contain at least all shortest paths for all pairs in D</p>
 <span class="sd">        sigma (list or tuple): subset of Vert(D)</span>
 <span class="sd">        shortest_dict (dictionary): dictionary generated from NetworkX;</span>
 <span class="sd">            this is an input so that it is computed just once overall</span>
-<span class="sd">        cumulative_dict (dictionary): dictionary where shortest paths are stored successively; </span>
+<span class="sd">        cumulative_dict (dictionary): dictionary where shortest paths are stored successively;</span>
 <span class="sd">            should already contain at least all shortest paths for all pairs in D</span>
 
 <span class="sd">    Returns:</span>
@@ -851,58 +876,61 @@ should already contain at least all shortest paths for all pairs in D</p>
     <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sigma</span><span class="p">)):</span>
-        <span class="c1">## remove i from sigma</span>
+        <span class="c1"># remove i from sigma</span>
         <span class="n">subset</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
         <span class="n">subset</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="c1">#print(&#39;subset is&#39;, subset)</span>
+        <span class="c1"># print(&#39;subset is&#39;, subset)</span>
 
-        <span class="c1">## find min path for subset</span>
+        <span class="c1"># find min path for subset</span>
         <span class="n">path1</span> <span class="o">=</span> <span class="n">find_f_path</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">subset</span><span class="p">,</span> <span class="n">shortest_dict</span><span class="p">,</span> <span class="n">cumulative_dict</span><span class="p">)</span>
 
-        <span class="c1">## if there is no path</span>
-        <span class="k">if</span> <span class="n">path1</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1">#print(&#39;There is no path that contains all the vertices&#39;, sigma)</span>
+        <span class="c1"># if there is no path</span>
+        <span class="k">if</span> <span class="n">path1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># print(&#39;There is no path that contains all the vertices&#39;, sigma)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1">#print(&#39;1--&#39;, path1)</span>
+            <span class="c1"># print(&#39;1--&#39;, path1)</span>
 
-            <span class="c1">## if i is already in the path, no need to connect i</span>
+            <span class="c1"># if i is already in the path, no need to connect i</span>
             <span class="k">if</span> <span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path1</span><span class="p">:</span>
-                <span class="c1">## find shortest path to connect i either at the start or at the end</span>
+                <span class="c1"># find shortest path to connect i either at the start or at the</span>
+                <span class="c1"># end</span>
                 <span class="n">option</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">length2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">path2</span> <span class="o">=</span> <span class="n">shortest_dict</span><span class="p">[</span><span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">path1</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="n">option</span> <span class="o">=</span> <span class="mi">1</span>
                     <span class="n">length2</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_weight</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">path2</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
-                    <span class="c1">#print(&#39;option 1&#39;, path2)</span>
-                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span> <span class="k">pass</span>
+                    <span class="c1"># print(&#39;option 1&#39;, path2)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">pass</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">path3</span> <span class="o">=</span> <span class="n">shortest_dict</span><span class="p">[</span><span class="n">path1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]][</span><span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
                     <span class="n">length3</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_weight</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">path3</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">length3</span> <span class="o">&lt;</span> <span class="n">length2</span><span class="p">:</span>
                         <span class="n">option</span> <span class="o">=</span> <span class="mi">2</span>
-                    <span class="c1">#print(&#39;option 2&#39;, path3)</span>
-                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span> <span class="k">pass</span>
+                    <span class="c1"># print(&#39;option 2&#39;, path3)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">pass</span>
 
-                <span class="c1">## concatenate shortest option</span>
+                <span class="c1"># concatenate shortest option</span>
                 <span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="c1">#print(&#39;no option&#39;)</span>
+                    <span class="c1"># print(&#39;no option&#39;)</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">path1</span> <span class="o">=</span> <span class="n">path2</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">path1</span>
                 <span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                     <span class="n">path1</span> <span class="o">=</span> <span class="n">path1</span> <span class="o">+</span> <span class="n">path3</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-            <span class="c1">#print(&#39;path is&#39;, path1)</span>
+            <span class="c1"># print(&#39;path is&#39;, path1)</span>
 
-            <span class="c1">## overwrite path if this is better than the last one</span>
+            <span class="c1"># overwrite path if this is better than the last one</span>
             <span class="n">length1</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_weight</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">path1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">length1</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">:</span>
-                <span class="c1">#print(&#39;hey, new best&#39;)</span>
+                <span class="c1"># print(&#39;hey, new best&#39;)</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">path1</span>
                 <span class="n">length</span> <span class="o">=</span> <span class="n">length1</span>
-    <span class="c1">#print(&#39;completed:&#39;, path)</span>
-    <span class="c1">## save data in dictionary</span>
+    <span class="c1"># print(&#39;completed:&#39;, path)</span>
+    <span class="c1"># save data in dictionary</span>
     <span class="n">cumulative_dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">sigma</span><span class="p">)]</span> <span class="o">=</span> <span class="n">path</span>
     <span class="k">return</span> <span class="n">path</span>
 </code></pre></div></td></tr></table></div>
@@ -997,21 +1025,7 @@ should already contain at least all shortest paths for all pairs in D</p>
 
           <details class="quote">
             <summary>Source code in <code>PHN_Directed.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">176</span>
 <span class="normal">177</span>
 <span class="normal">178</span>
 <span class="normal">179</span>
@@ -1020,7 +1034,27 @@ should already contain at least all shortest paths for all pairs in D</p>
 <span class="normal">182</span>
 <span class="normal">183</span>
 <span class="normal">184</span>
-<span class="normal">185</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">newfiltration_persistence</span><span class="p">(</span><span class="n">D</span> <span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">max_dim</span> <span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dionysus</span><span class="o">.</span><span class="n">Diagram</span><span class="p">:</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">newfiltration_persistence</span><span class="p">(</span>
+        <span class="n">D</span><span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span>
+        <span class="n">max_dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">dionysus</span><span class="o">.</span><span class="n">Diagram</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function computes persistence via new filtration from a digraph D using Dionysus.</span>
 
@@ -1033,12 +1067,14 @@ should already contain at least all shortest paths for all pairs in D</p>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">shortest_dict</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
-    <span class="c1">#shortest_paths_asym = pairs_dictionary(D, shortest_dict)</span>
-    <span class="c1">## to compute n-dimensional homology we need, (n+1)-dimensional simplices, so subsets of size n+2</span>
-    <span class="n">all_subsets</span><span class="p">,</span> <span class="n">all_fvals</span> <span class="o">=</span> <span class="n">all_fvalues</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">shortest_dict</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="n">max_dim</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># shortest_paths_asym = pairs_dictionary(D, shortest_dict)</span>
+    <span class="c1"># to compute n-dimensional homology we need, (n+1)-dimensional simplices,</span>
+    <span class="c1"># so subsets of size n+2</span>
+    <span class="n">all_subsets</span><span class="p">,</span> <span class="n">all_fvals</span> <span class="o">=</span> <span class="n">all_fvalues</span><span class="p">(</span>
+        <span class="n">D</span><span class="p">,</span> <span class="n">shortest_dict</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="n">max_dim</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="n">f</span> <span class="o">=</span> <span class="n">dio</span><span class="o">.</span><span class="n">Filtration</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">simp</span><span class="p">,</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">all_subsets</span><span class="p">,</span><span class="n">all_fvals</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">simp</span><span class="p">,</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">all_subsets</span><span class="p">,</span> <span class="n">all_fvals</span><span class="p">):</span>
         <span class="n">f</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dio</span><span class="o">.</span><span class="n">Simplex</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">simp</span><span class="p">),</span> <span class="n">time</span><span class="p">))</span>
     <span class="n">f</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
@@ -1137,7 +1173,8 @@ this is an input so that it is computed just once overall</p>
 
           <details class="quote">
             <summary>Source code in <code>PHN_Directed.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">12</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
+<span class="normal">12</span>
 <span class="normal">13</span>
 <span class="normal">14</span>
 <span class="normal">15</span>
@@ -1171,7 +1208,8 @@ this is an input so that it is computed just once overall</p>
 <span class="normal">43</span>
 <span class="normal">44</span>
 <span class="normal">45</span>
-<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pairs_dictionary</span><span class="p">(</span><span class="n">D</span> <span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">shortest_dict</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="normal">46</span>
+<span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pairs_dictionary</span><span class="p">(</span><span class="n">D</span><span class="p">:</span> <span class="n">NetworkX</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">shortest_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function builds a dictionary with the shortest path between any pair of vertices.</span>
 
@@ -1186,25 +1224,27 @@ this is an input so that it is computed just once overall</p>
     <span class="n">dictionary</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">nodes</span><span class="p">))</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">u</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
-            <span class="c1">#print(u,v)</span>
+            <span class="c1"># print(u,v)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">shortest_dict</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">v</span><span class="p">]</span>
-                <span class="c1">#length = len(path)</span>
+                <span class="c1"># length = len(path)</span>
                 <span class="n">length</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_weight</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span>
-                <span class="c1">#print(path)</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span> <span class="k">pass</span>
+                <span class="c1"># print(path)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">path2</span> <span class="o">=</span> <span class="n">shortest_dict</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">u</span><span class="p">]</span>
-                <span class="c1">#if len(path2) &lt; length:</span>
+                <span class="c1"># if len(path2) &lt; length:</span>
                 <span class="k">if</span> <span class="n">nx</span><span class="o">.</span><span class="n">path_weight</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">path2</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">:</span>
                     <span class="n">path</span> <span class="o">=</span> <span class="n">path2</span>
-                <span class="c1">#print(path2)</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span> <span class="k">pass</span>
-            <span class="n">dictionary</span><span class="p">[(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)]</span> <span class="o">=</span> <span class="n">path</span>
+                <span class="c1"># print(path2)</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="n">dictionary</span><span class="p">[(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)]</span> <span class="o">=</span> <span class="n">path</span>
     <span class="k">return</span> <span class="n">dictionary</span>
 </code></pre></div></td></tr></table></div>
           </details>
@@ -1378,25 +1418,7 @@ this is an input so that it is computed just once overall</p>
 
           <details class="quote">
             <summary>Source code in <code>PHN_Directed.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">206</span>
 <span class="normal">207</span>
 <span class="normal">208</span>
 <span class="normal">209</span>
@@ -1472,14 +1494,37 @@ this is an input so that it is computed just once overall</p>
 <span class="normal">279</span>
 <span class="normal">280</span>
 <span class="normal">281</span>
-<span class="normal">282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_dgms</span><span class="p">(</span><span class="n">dgms</span> <span class="p">:</span> <span class="n">dionysus</span><span class="o">.</span><span class="n">Diagram</span><span class="p">,</span> 
-              <span class="n">title</span> <span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-              <span class="n">filename</span> <span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-              <span class="n">report_repeats</span> <span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-              <span class="n">max_dim</span> <span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
-              <span class="n">ax</span> <span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-              <span class="n">max_val</span> <span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> 
-              <span class="n">get_dgms</span> <span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">plot_dgms</span><span class="p">(</span><span class="n">dgms</span><span class="p">:</span> <span class="n">dionysus</span><span class="o">.</span><span class="n">Diagram</span><span class="p">,</span>
+              <span class="n">title</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">filename</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">report_repeats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">max_dim</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+              <span class="n">ax</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">max_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span>
+              <span class="n">get_dgms</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
               <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This function plots persistence diagrams as obtained from Dionysus.</span>
@@ -1500,63 +1545,68 @@ this is an input so that it is computed just once overall</p>
 
     <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;brown&#39;</span><span class="p">]</span>
 
-    <span class="c1">#if max_dim == None: </span>
-    <span class="n">max_dim</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_dim</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">dgms</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1"># if max_dim == None:</span>
+    <span class="n">max_dim</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_dim</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dgms</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
     <span class="n">births</span><span class="p">,</span> <span class="n">deaths</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">dgm</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dgms</span><span class="p">[:</span><span class="n">max_dim</span><span class="o">+</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">births</span> <span class="o">=</span> <span class="n">births</span><span class="o">+</span><span class="p">[</span><span class="n">pt</span><span class="o">.</span><span class="n">birth</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">dgm</span><span class="p">]</span>
-        <span class="n">deaths</span> <span class="o">=</span> <span class="n">deaths</span><span class="o">+</span><span class="p">[</span><span class="n">pt</span><span class="o">.</span><span class="n">death</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">dgm</span><span class="p">]</span>
-        <span class="n">dims</span> <span class="o">=</span> <span class="n">dims</span><span class="o">+</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">dgm</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dgm</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dgms</span><span class="p">[:</span><span class="n">max_dim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]):</span>
+        <span class="n">births</span> <span class="o">=</span> <span class="n">births</span> <span class="o">+</span> <span class="p">[</span><span class="n">pt</span><span class="o">.</span><span class="n">birth</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">dgm</span><span class="p">]</span>
+        <span class="n">deaths</span> <span class="o">=</span> <span class="n">deaths</span> <span class="o">+</span> <span class="p">[</span><span class="n">pt</span><span class="o">.</span><span class="n">death</span> <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">dgm</span><span class="p">]</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="n">dims</span> <span class="o">+</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">dgm</span><span class="p">]</span>
     <span class="n">births</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">births</span><span class="p">)</span>
     <span class="n">deaths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">deaths</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">report_repeats</span><span class="p">:</span>
-        <span class="n">pts_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">births</span><span class="p">,</span><span class="n">deaths</span><span class="p">,</span><span class="n">dims</span><span class="p">))</span>
+        <span class="n">pts_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">births</span><span class="p">,</span> <span class="n">deaths</span><span class="p">,</span> <span class="n">dims</span><span class="p">))</span>
 
-    <span class="n">max_death</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">deaths</span><span class="p">[</span><span class="n">deaths</span><span class="o">&lt;</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
-    <span class="n">max_birth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">births</span><span class="p">[</span><span class="n">births</span><span class="o">&lt;</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
-    <span class="n">inf_val</span> <span class="o">=</span> <span class="mf">1.1</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">max_death</span><span class="p">,</span> <span class="n">max_birth</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
+    <span class="n">max_death</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">deaths</span><span class="p">[</span><span class="n">deaths</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+    <span class="n">max_birth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">births</span><span class="p">[</span><span class="n">births</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">])</span>
+    <span class="n">inf_val</span> <span class="o">=</span> <span class="mf">1.1</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_death</span><span class="p">,</span> <span class="n">max_birth</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
 
-    <span class="n">deaths</span><span class="p">[</span> <span class="n">deaths</span><span class="o">==</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="p">]</span> <span class="o">=</span> <span class="n">inf_val</span>
+    <span class="n">deaths</span><span class="p">[</span><span class="n">deaths</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span> <span class="o">=</span> <span class="n">inf_val</span>
 
-    <span class="k">if</span> <span class="n">ax</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
 
-    <span class="c1">#fig = plt.figure(figsize=(5.5,5))</span>
+    <span class="c1"># fig = plt.figure(figsize=(5.5,5))</span>
 
-    <span class="k">if</span> <span class="n">title</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
 
     <span class="c1"># Diagonal</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
-    <span class="c1">#plt.plot([0,100],[0,100], &#39;k--&#39;, alpha=0.4)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="c1"># plt.plot([0,100],[0,100], &#39;k--&#39;, alpha=0.4)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">inf_val</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">inf_val</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="c1">#ax.yticks([inf_val,], minor=True, labels=[&#39;\u221e&#39;])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">inf_val</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">inf_val</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="c1"># ax.yticks([inf_val,], minor=True, labels=[&#39;\u221e&#39;])</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.05</span><span class="o">*</span><span class="n">inf_val</span><span class="p">,</span><span class="n">inf_val</span><span class="o">*</span><span class="mf">0.95</span><span class="p">))</span>
-    <span class="c1">#ax.xlim((-0.05*max_birth,max_birth*0.95))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">inf_val</span><span class="o">*</span><span class="mf">1.05</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.05</span> <span class="o">*</span> <span class="n">inf_val</span><span class="p">,</span> <span class="n">inf_val</span> <span class="o">*</span> <span class="mf">0.95</span><span class="p">))</span>
+    <span class="c1"># ax.xlim((-0.05*max_birth,max_birth*0.95))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">inf_val</span> <span class="o">*</span> <span class="mf">1.05</span><span class="p">))</span>
     <span class="c1"># Infinity line</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mf">0.1</span><span class="o">*</span><span class="n">inf_val</span><span class="p">,</span><span class="n">inf_val</span><span class="o">*</span><span class="mf">1.5</span><span class="p">],[</span><span class="n">inf_val</span><span class="p">,</span><span class="n">inf_val</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\u221e</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">inf_val</span><span class="p">,</span> <span class="n">inf_val</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">inf_val</span><span class="p">,</span> <span class="n">inf_val</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\u221e</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
-    <span class="n">visible_dims</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span>
+    <span class="n">visible_dims</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)):</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">births</span><span class="p">[</span><span class="n">i</span><span class="p">],],</span> <span class="p">[</span><span class="n">deaths</span><span class="p">[</span><span class="n">i</span><span class="p">],],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span> <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">births</span><span class="p">[</span><span class="n">i</span><span class="p">],],</span> <span class="p">[</span><span class="n">deaths</span><span class="p">[</span><span class="n">i</span><span class="p">],],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
         <span class="n">visible_dims</span><span class="p">[</span><span class="n">dims</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">visible_dims</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">d</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Dim &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">visible_dims</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">d</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Dim &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span> <span class="n">ax</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">report_repeats</span><span class="p">:</span>
-        <span class="c1">#pts_list = list(zip(births,deaths))</span>
-        <span class="n">count_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span><span class="n">pts_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pts_list</span><span class="p">}</span>
+        <span class="c1"># pts_list = list(zip(births,deaths))</span>
+        <span class="n">count_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">pts_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pts_list</span><span class="p">}</span>
         <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">count_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
         <span class="n">repeats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">count_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()))[</span><span class="n">counts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
@@ -1564,7 +1614,7 @@ this is an input so that it is computed just once overall</p>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Point&#39;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="s1">&#39;shows up&#39;</span><span class="p">,</span> <span class="n">count_dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">r</span><span class="p">)],</span> <span class="s1">&#39;times&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">get_dgms</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ax</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">births</span><span class="p">,</span><span class="n">deaths</span><span class="p">,</span><span class="n">dims</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">ax</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">births</span><span class="p">,</span> <span class="n">deaths</span><span class="p">,</span> <span class="n">dims</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">ax</span>
 </code></pre></div></td></tr></table></div>
