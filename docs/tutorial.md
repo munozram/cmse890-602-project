@@ -17,7 +17,7 @@ First, we need a graph to analyze. For this example we will use the following gr
 >>> graph = nx.DiGraph(adjacency_matrix)
 ```
 <p align="center">
-<img src="example_graph.png" />
+<img src="https://github.com/munozram/cmse890-602-project/blob/main/docs/example_graph.png" />
 </p>
 
 ### Compute persistent homology
@@ -40,5 +40,5 @@ We may also use the plotting function to see the persistence diagram.
 >>> plot_dgms(dgms, max_dim=3)
 ```
 <p align="center">
-<img src="example_diagram.png" />
+<img src="https://github.com/munozram/cmse890-602-project/blob/main/docs/example_diagram.png" />
 </p>
