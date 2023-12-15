@@ -2,13 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 import copy
+from typing import Optional
 
 import dionysus as dio
 
 # from PHN_Dowker import *
 
 
-def pairs_dictionary(D: NetworkX.DiGraph, shortest_dict: dict) -> dict:
+def pairs_dictionary(D: nx.DiGraph, shortest_dict: dict) -> dict:
     """
     This function builds a dictionary with the shortest path between any pair of vertices.
 
@@ -48,7 +49,7 @@ def pairs_dictionary(D: NetworkX.DiGraph, shortest_dict: dict) -> dict:
 
 
 def find_f_path(
-        D: NetworkX.DiGraph,
+        D: nx.DiGraph,
         sigma: list | tuple,
         shortest_dict: dict,
         cumulative_dict: dict) -> list:
@@ -135,7 +136,7 @@ def find_f_path(
     return path
 
 
-def all_fvalues(D: NetworkX.DiGraph, shortest_dict: dict,
+def all_fvalues(D: nx.DiGraph, shortest_dict: dict,
                 max_size: int = 3) -> tuple[list, list]:
     """This function computes all f(sigma) values for all possible vertex subsets, sigma, with size at most max_size.
 
@@ -174,14 +175,15 @@ def all_fvalues(D: NetworkX.DiGraph, shortest_dict: dict,
 
 
 def newfiltration_persistence(
-        D: NetworkX.DiGraph,
-        max_dim: int = 1) -> dionysus.Diagram:
+        D: nx.DiGraph,
+        max_dim: int = 1, persistence_package: str='dionysus') -> dio.Diagram:
     '''
     This function computes persistence via new filtration from a digraph D using Dionysus.
 
     Args:
         D (networkx.DiGraph): directed graph
         max_dim (int): maximum dimension to compute persistence; default is 1
+        persistence_package: Python package used to compute persistent homology; either 'dionysus' or 'gudhi'
 
     Returns:
         dgms (list): list of persistence diagrams
@@ -194,21 +196,32 @@ def newfiltration_persistence(
     all_subsets, all_fvals = all_fvalues(
         D, shortest_dict, max_size=max_dim + 2)
 
-    f = dio.Filtration()
-    for simp, time in zip(all_subsets, all_fvals):
-        f.append(dio.Simplex(list(simp), time))
-    f.sort()
+    if persistence_package == 'dionysus':
+        import dionysus as dio
+        f = dio.Filtration()
+        for simp, time in zip(all_subsets, all_fvals):
+            f.append(dio.Simplex(list(simp), time))
+        f.sort()
 
-    dgms = dio.init_diagrams(dio.homology_persistence(f), f)
-    return dgms
+        dgms = dio.init_diagrams(dio.homology_persistence(f), f)
+        return dgms
+    elif persistence_package == 'gudhi':
+        import gudhi
+        f = gudhi.SimplexTree()
+        for simp, time in zip(all_subsets, all_fvals):
+            f.insert(list(simp), time)
+
+        dgms = f.persistence()
+        return dgms
 
 
-def plot_dgms(dgms: dionysus.Diagram,
-              title: typing.Optional[str] = None,
-              filename: typing.Optional[str] = None,
+
+def plot_dgms(dgms: dio.Diagram,
+              title: Optional[str] = None,
+              filename: Optional[str] = None,
               report_repeats: bool = True,
-              max_dim: typing.Optional[int] = 1,
-              ax: typing.Optional[plt.Axes] = None,
+              max_dim: Optional[int] = 1,
+              ax: Optional[plt.Axes] = None,
               max_val: float = 1.,
               get_dgms: bool = False
               ) -> plt.Axes | tuple[plt.Axes, np.array]:
