@@ -4,7 +4,7 @@ import networkx as nx
 import copy
 from typing import Optional
 
-# import dionysus as dio
+import dionysus as dio
 
 # from PHN_Dowker import *
 
@@ -136,13 +136,12 @@ def find_f_path(
     return path
 
 
-def all_fvalues(D: nx.DiGraph, shortest_dict: dict,
+def all_fvalues(D: nx.DiGraph,
                 max_size: int = 3) -> tuple[list, list]:
     """This function computes all f(sigma) values for all possible vertex subsets, sigma, with size at most max_size.
 
     Args:
         D (networkx.DiGraph): directed graph
-        shortest_dict (dictionary): dictionary where shortest paths are stored successively
         max_size (int): maximum size for subsets; default is 3
 
     Returns:
@@ -150,6 +149,7 @@ def all_fvalues(D: nx.DiGraph, shortest_dict: dict,
         all_fvals (list): list of all corresponding filtration values (float)
     """
 
+    shortest_dict = nx.shortest_path(D)
     cumulative_dict = pairs_dictionary(D, shortest_dict)
 
     nodes = sorted(list(D.nodes))
@@ -171,49 +171,34 @@ def all_fvalues(D: nx.DiGraph, shortest_dict: dict,
             # print(sigma, path)
             # all_fvals.append(len(path)-1)
             all_fvals.append(nx.path_weight(D, path, weight='weight'))
-    return all_subsets, all_fvals
+    return all_subsets, np.array(all_fvals)
 
 
 def newfiltration_persistence(
         D: nx.DiGraph,
-        max_dim: int = 1,
-        persistence_package: str = 'dionysus') -> dio.Diagram:
+        max_dim: int = 1) -> dio.Diagram:
     '''
     This function computes persistence via new filtration from a digraph D using Dionysus.
 
     Args:
         D (networkx.DiGraph): directed graph
         max_dim (int): maximum dimension to compute persistence; default is 1
-        persistence_package: Python package used to compute persistent homology; either 'dionysus' or 'gudhi'
 
     Returns:
         dgms (list): list of persistence diagrams
     '''
 
-    shortest_dict = nx.shortest_path(D)
-    # shortest_paths_asym = pairs_dictionary(D, shortest_dict)
     # to compute n-dimensional homology we need, (n+1)-dimensional simplices,
     # so subsets of size n+2
-    all_subsets, all_fvals = all_fvalues(
-        D, shortest_dict, max_size=max_dim + 2)
+    all_subsets, all_fvals = all_fvalues(D, max_size=max_dim + 2)
 
-    if persistence_package == 'dionysus':
-        import dionysus as dio
-        f = dio.Filtration()
-        for simp, time in zip(all_subsets, all_fvals):
-            f.append(dio.Simplex(list(simp), time))
-        f.sort()
+    f = dio.Filtration()
+    for simp, time in zip(all_subsets, all_fvals):
+        f.append(dio.Simplex(list(simp), time))
+    f.sort()
 
-        dgms = dio.init_diagrams(dio.homology_persistence(f), f)
-        return dgms
-    elif persistence_package == 'gudhi':
-        import gudhi
-        f = gudhi.SimplexTree()
-        for simp, time in zip(all_subsets, all_fvals):
-            f.insert(list(simp), time)
-
-        dgms = f.persistence()
-        return dgms
+    dgms = dio.init_diagrams(dio.homology_persistence(f), f)
+    return dgms
 
 
 def plot_dgms(dgms: dio.Diagram,
