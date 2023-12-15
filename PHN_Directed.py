@@ -176,7 +176,8 @@ def all_fvalues(D: nx.DiGraph, shortest_dict: dict,
 
 def newfiltration_persistence(
         D: nx.DiGraph,
-        max_dim: int = 1, persistence_package: str='dionysus') -> dio.Diagram:
+        max_dim: int = 1,
+        persistence_package: str = 'dionysus') -> dio.Diagram:
     '''
     This function computes persistence via new filtration from a digraph D using Dionysus.
 
@@ -213,7 +214,6 @@ def newfiltration_persistence(
 
         dgms = f.persistence()
         return dgms
-
 
 
 def plot_dgms(dgms: dio.Diagram,
