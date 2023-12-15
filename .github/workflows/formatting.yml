@@ -20,3 +20,8 @@ jobs:
       - name: Apply formatting
         run: |
           autopep8 --in-place --aggressive --aggressive PHN_Directed.py
+      - name: Commit changes
+        run: |
+          git add PHN_Directed.py
+          git commit -m 'Automated commit after PEP8 formatting'
+          git push
