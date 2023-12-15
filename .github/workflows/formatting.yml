@@ -20,7 +20,12 @@ jobs:
       - name: Apply formatting
         run: |
           autopep8 --in-place --aggressive --aggressive PHN_Directed.py
+      - name: Check if there are any changes
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
       - name: Commit changes
+        if: steps.verify_diff.outputs.changed == 'true'
         run: |
           git config --global user.name 'David M'
           git config --global user.email 'munozram@users.noreply.github.com'
