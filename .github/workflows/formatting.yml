@@ -19,7 +19,7 @@ jobs:
           pip install autopep8
       - name: Apply formatting
         run: |
-          autopep8 --in-place --aggressive --aggressive PHN_Directed.py
+          autopep8 --in-place --aggressive --aggressive .
       - name: Check if there are any changes
         id: verify_diff
         run: |
