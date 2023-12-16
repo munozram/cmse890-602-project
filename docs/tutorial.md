@@ -20,7 +20,7 @@ First, we need a graph to analyze. For this example we will use the following gr
 
 ### Compute persistent homology
 
-Now we just use our function to compute persistent homology on this graph as shown below. We may choose a higher homology dimension. The output of this function is a list of persistence diagrams (one per dimension from 0 to `max_dim` plus possibly a last one showing evidence of higher dimensional points) as `dionysus.Diagram` objects.
+Now we just use our main function to compute persistent homology on this graph as shown below. We may choose a higher homology dimension. The output of this function is a list of persistence diagrams (one per dimension from 0 to `max_dim` plus possibly a last one showing evidence of higher dimensional persistence points) as `dionysus.Diagram` objects.
 ```
 >>> dgms = newfiltration_persistence(graph, max_dim = 3)
 >>> dgms
