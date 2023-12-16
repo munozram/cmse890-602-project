@@ -5,6 +5,6 @@ plugins:
   - mkdocstrings
 nav:
   - Home: index.md
-  - Tutorial: tutorial.md
   - Explanation: explanation.md
+  - Tutorial: tutorial.md
   - Reference: reference.md
