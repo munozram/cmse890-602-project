@@ -12,7 +12,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../howtoguide/">
+        <link rel="next" href="../explanation/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -263,26 +263,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../howtoguide/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    How-to Guide
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../explanation/" class="md-nav__link">
         
   
@@ -399,7 +379,7 @@
 </code></pre>
 <p><img alt="Example graph" src="../example_graph.png" /></p>
 <h3 id="compute-persistent-homology">Compute persistent homology</h3>
-<p>Now we just use our function to compute persistent homology on this graph as shown below. We may choose a higher homology dimension. The output of this function is a list of persistence diagrams (one per dimension from 0 to <code>max_dim</code> plus possibly a last one showing evidence of higher dimensional points) as <code>dionysus.Diagram</code> objects.</p>
+<p>Now we just use our main function to compute persistent homology on this graph as shown below. We may choose a higher homology dimension. The output of this function is a list of persistence diagrams (one per dimension from 0 to <code>max_dim</code> plus possibly a last one showing evidence of higher dimensional persistence points) as <code>dionysus.Diagram</code> objects.</p>
 <pre><code>&gt;&gt;&gt; dgms = newfiltration_persistence(graph, max_dim = 3)
 &gt;&gt;&gt; dgms
 [Diagram with 5 points,
