@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --global user.name 'David M'
           git config --global user.email 'munozram@users.noreply.github.com'
-          git add PHN_Directed.py
+          git add .
           git commit -m 'Automated commit after PEP8 formatting'
           git push
